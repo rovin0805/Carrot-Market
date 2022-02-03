@@ -8,6 +8,7 @@ const Container = tw.div`
 bg-slate-400 
   py-20 
   px-10
+  min-h-screen
 `;
 
 const Box = tw.div`
@@ -77,7 +78,7 @@ const Receipt = () => (
 );
 
 const Profile = () => (
-  <div className='overflow-hidden rounded-3xl bg-white shadow-xl'>
+  <Box>
     <div className='bg-blue-500 p-6 pb-14'>
       <span className='text-2xl text-white'>Profile</span>
     </div>
@@ -98,7 +99,46 @@ const Profile = () => (
         <span className='text-sm text-gray-500'>미국</span>
       </div>
     </div>
-  </div>
+  </Box>
+);
+
+const Shopping = () => (
+  <Box>
+    <div className='mb-5 flex items-center justify-between'>
+      <span>⬅️</span>
+      <div className='space-x-3'>
+        <span>⭐️ 4.9</span>
+        <span className='rounded-md p-2 shadow-xl'>💖</span>
+      </div>
+    </div>
+    <div className='mb-5 h-72 bg-zinc-400' />
+    <div className='flex flex-col'>
+      <span className='text-xl font-medium'>Swoon Lounge</span>
+      <span className='text-xs text-gray-500'>Chair</span>
+      <div className='mt-3 mb-5 flex items-center justify-between'>
+        <div>
+          <input type='radio' />
+          <input type='radio' />
+          <input type='radio' />
+        </div>
+        <div className='flex items-center space-x-5'>
+          <button className=' flex aspect-square w-8 items-center justify-center rounded-lg bg-blue-200 text-xl text-gray-500'>
+            -
+          </button>
+          <span>1</span>
+          <button className=' flex aspect-square w-8 items-center justify-center rounded-lg bg-blue-200 text-xl text-gray-500'>
+            +
+          </button>
+        </div>
+      </div>
+      <div className='flex items-center justify-between'>
+        <span className='text-2xl font-medium'>$450</span>
+        <button className='rounded-lg bg-blue-500 py-2 px-8 text-center text-xs text-white'>
+          Add to cart
+        </button>
+      </div>
+    </div>
+  </Box>
 );
 
 const Home: NextPage = () => {
@@ -106,6 +146,7 @@ const Home: NextPage = () => {
     <Container>
       <Receipt />
       <Profile />
+      <Shopping />
     </Container>
   );
 };
