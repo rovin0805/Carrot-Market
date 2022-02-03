@@ -83,7 +83,7 @@ const Receipt = () => (
 );
 
 const Profile = () => (
-  <Box>
+  <div className='overflow-hidden rounded-3xl bg-white shadow-xl'>
     <div className='bg-blue-500 p-6 pb-14'>
       <span className='text-2xl text-white'>Profile</span>
     </div>
@@ -104,7 +104,7 @@ const Profile = () => (
         <span className='text-sm text-gray-500'>미국</span>
       </div>
     </div>
-  </Box>
+  </div>
 );
 
 const Shopping = () => (
