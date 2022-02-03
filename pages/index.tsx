@@ -47,7 +47,7 @@ const TotalBox = tw.div`
   pt-2
 `;
 
-const Button = tw.div`
+const Button = tw.button`
   mx-auto 
   mt-5 
   w-2/4 
@@ -56,6 +56,11 @@ const Button = tw.div`
   p-3 
   text-center 
   text-white
+  block
+hover:bg-teal-500 
+hover:text-black
+active:bg-yellow-500 
+focus:bg-red-500
 `;
 
 const Receipt = () => (
@@ -116,10 +121,10 @@ const Shopping = () => (
       <span className='text-xl font-medium'>Swoon Lounge</span>
       <span className='text-xs text-gray-500'>Chair</span>
       <div className='mt-3 mb-5 flex items-center justify-between'>
-        <div>
-          <input type='radio' />
-          <input type='radio' />
-          <input type='radio' />
+        <div className='space-x-2'>
+          <button className='h-5 w-5 rounded-full bg-yellow-500' />
+          <button className='h-5 w-5 rounded-full bg-indigo-500' />
+          <button className='h-5 w-5 rounded-full bg-teal-500' />
         </div>
         <div className='flex items-center space-x-5'>
           <button className=' flex aspect-square w-8 items-center justify-center rounded-lg bg-blue-200 text-xl text-gray-500'>
