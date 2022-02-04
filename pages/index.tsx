@@ -66,14 +66,21 @@ focus:bg-red-500
 const Receipt = () => (
   <Box>
     <SelectItem>Select Item</SelectItem>
-    <Item>
-      <ItemName>Grey Chair</ItemName>
-      <ItemPrice>$19</ItemPrice>
-    </Item>
-    <Item>
-      <ItemName>Grey Chair</ItemName>
-      <ItemPrice>$19</ItemPrice>
-    </Item>
+    <ul>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <Item key={i} className='odd:bg-blue-300 even:bg-green-300'>
+          <ItemName>Grey Chair</ItemName>
+          <ItemPrice>$19</ItemPrice>
+        </Item>
+      ))}
+    </ul>
+    <ul>
+      {['a', 'b', 'c', ''].map((c, i) => (
+        <li key={i} className='bg-red-500 py-2 empty:hidden'>
+          {c}
+        </li>
+      ))}
+    </ul>
     <TotalBox>
       <span>Total</span>
       <ItemName>$10</ItemName>
@@ -99,7 +106,7 @@ const Profile = () => (
           <span className='font-medium'>$340</span>
         </div>
       </div>
-      <div className='relative  -mt-10 -mb-5 flex flex-col items-center'>
+      <div className='relative -mt-10 -mb-5 flex flex-col items-center'>
         <span className='text-lg font-medium'>Tony Molloy</span>
         <span className='text-sm text-gray-500'>미국</span>
       </div>
