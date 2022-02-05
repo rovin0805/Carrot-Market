@@ -9,6 +9,9 @@ bg-slate-400
   py-20 
   px-10
   min-h-screen
+  lg:grid-cols-2
+  xl:grid-cols-3
+  xl:place-content-center
 `;
 
 const Box = tw.div`
@@ -64,23 +67,23 @@ focus:bg-red-500
 `;
 
 const Receipt = ({ className }: { className?: string }) => (
-  <Box className={`${className}`}>
+  <Box className={`${className} flex flex-col justify-between`}>
     <SelectItem>Select Item</SelectItem>
     <ul>
       {[1, 2, 3, 4, 5].map((i) => (
-        <Item key={i} className='odd:bg-blue-300 even:bg-green-300'>
+        <Item key={i} className='odd:bg-blue-100 even:bg-green-100'>
           <ItemName>Grey Chair</ItemName>
           <ItemPrice>$19</ItemPrice>
         </Item>
       ))}
     </ul>
-    <ul>
+    {/* <ul>
       {['a', 'b', 'c', ''].map((c, i) => (
         <li key={i} className='bg-red-500 py-2 empty:hidden'>
           {c}
         </li>
       ))}
-    </ul>
+    </ul> */}
     <TotalBox>
       <span>Total</span>
       <ItemName>$10</ItemName>
@@ -91,7 +94,7 @@ const Receipt = ({ className }: { className?: string }) => (
 
 const Profile = () => (
   <div className='group overflow-hidden rounded-3xl bg-white shadow-xl'>
-    <div className='bg-blue-500 p-6 pb-14'>
+    <div className='p-6 pb-14 portrait:bg-blue-500 landscape:bg-teal-500'>
       <span className='text-2xl text-white'>Profile</span>
     </div>
     <div className='relative -top-5 rounded-3xl bg-white p-6'>
@@ -115,7 +118,7 @@ const Profile = () => (
 );
 
 const Shopping = () => (
-  <Box>
+  <Box className='lg:col-span-2 xl:col-span-1'>
     <div className='mb-5 flex items-center justify-between'>
       <span>⬅️</span>
       <div className='space-x-3'>
@@ -205,11 +208,11 @@ const More = () => (
 const Home: NextPage = () => {
   return (
     <Container>
-      <Receipt className='sm:bg-rose-300 md:bg-teal-200 lg:bg-indigo-300 xl:bg-yellow-200 2xl:bg-lime-200' />
+      <Receipt />
       <Profile />
       <Shopping />
-      <Form />
-      <More />
+      {/* <Form /> */}
+      {/* <More /> */}
     </Container>
   );
 };
