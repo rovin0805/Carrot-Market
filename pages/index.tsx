@@ -63,8 +63,8 @@ active:bg-yellow-500
 focus:bg-red-500
 `;
 
-const Receipt = () => (
-  <Box>
+const Receipt = ({ className }: { className?: string }) => (
+  <Box className={`${className}`}>
     <SelectItem>Select Item</SelectItem>
     <ul>
       {[1, 2, 3, 4, 5].map((i) => (
@@ -205,7 +205,7 @@ const More = () => (
 const Home: NextPage = () => {
   return (
     <Container>
-      <Receipt />
+      <Receipt className='sm:bg-rose-300 md:bg-teal-200 lg:bg-indigo-300 xl:bg-yellow-200 2xl:bg-lime-200' />
       <Profile />
       <Shopping />
       <Form />
