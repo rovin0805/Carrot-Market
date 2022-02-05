@@ -90,7 +90,7 @@ const Receipt = () => (
 );
 
 const Profile = () => (
-  <div className='overflow-hidden rounded-3xl bg-white shadow-xl'>
+  <div className='group overflow-hidden rounded-3xl bg-white shadow-xl'>
     <div className='bg-blue-500 p-6 pb-14'>
       <span className='text-2xl text-white'>Profile</span>
     </div>
@@ -100,7 +100,7 @@ const Profile = () => (
           <span className='text-sm text-gray-500'>Orders</span>
           <span className='font-medium'>340</span>
         </div>
-        <div className='h-24 w-24 rounded-full bg-red-400' />
+        <div className='h-24 w-24 rounded-full bg-red-400 group-hover:bg-emerald-400' />
         <div className='flex flex-col items-center'>
           <span className='text-sm text-gray-500'>Spent</span>
           <span className='font-medium'>$340</span>
@@ -153,12 +153,40 @@ const Shopping = () => (
   </Box>
 );
 
+const Form = () => (
+  <form className='flex flex-col space-y-2 p-5 focus-within:bg-blue-500'>
+    <input
+      type='text'
+      required
+      placeholder='Username'
+      className='peer border-cyan-700 required:border-2 invalid:bg-pink-300'
+    />
+    <span className='hidden peer-invalid:block peer-invalid:text-red-500'>
+      This input is invalid
+    </span>
+    <span className='hidden peer-valid:block peer-valid:text-teal-500'>
+      Awesome username
+    </span>
+    <span className='hidden peer-hover:block peer-hover:text-amber-500'>
+      Hello
+    </span>
+    <input
+      type='password'
+      required
+      placeholder='Password'
+      className='placeholder-shown:text-cyan-600'
+    />
+    <input type='submit' value='Login' className='bg-white' />
+  </form>
+);
+
 const Home: NextPage = () => {
   return (
     <Container>
       <Receipt />
       <Profile />
       <Shopping />
+      <Form />
     </Container>
   );
 };
