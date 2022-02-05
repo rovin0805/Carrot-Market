@@ -17,6 +17,8 @@ bg-slate-400
 const Box = tw.div`
   rounded-3xl
 bg-white
+  dark:bg-black
+  dark:text-white
   p-6
   shadow-xl
 `;
