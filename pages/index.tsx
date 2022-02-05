@@ -154,30 +154,52 @@ const Shopping = () => (
 );
 
 const Form = () => (
-  <form className='flex flex-col space-y-2 p-5 focus-within:bg-blue-500'>
+  <Box>
+    <form className='flex flex-col space-y-2 p-5 focus-within:bg-blue-500'>
+      <input
+        type='text'
+        required
+        placeholder='Username'
+        className='peer border-cyan-700 required:border-2 invalid:bg-pink-300'
+      />
+      <span className='hidden peer-invalid:block peer-invalid:text-red-500'>
+        This input is invalid
+      </span>
+      <span className='hidden peer-valid:block peer-valid:text-teal-500'>
+        Awesome username
+      </span>
+      <input
+        type='password'
+        required
+        placeholder='Password'
+        className='placeholder-shown:text-cyan-600'
+      />
+      <input type='submit' value='Login' className='bg-white' />
+    </form>
+  </Box>
+);
+
+const More = () => (
+  <Box>
+    <details className='open:bg-violet-300 open:text-white'>
+      <summary className='cursor-pointer select-none'>This is title</summary>
+      <span className=' selection:bg-indigo-200 selection:text-white'>
+        content
+      </span>
+    </details>
+    <ul className='list-disc marker:text-rose-500'>
+      <li>Hi</li>
+      <li>Hi</li>
+      <li>Hi</li>
+    </ul>
     <input
-      type='text'
-      required
-      placeholder='Username'
-      className='peer border-cyan-700 required:border-2 invalid:bg-pink-300'
+      type='file'
+      className='file:cursor-pointer file:rounded-xl file:border-0 file:bg-violet-400 file:p-1 file:text-white file:transition-colors file:hover:bg-purple-800'
     />
-    <span className='hidden peer-invalid:block peer-invalid:text-red-500'>
-      This input is invalid
-    </span>
-    <span className='hidden peer-valid:block peer-valid:text-teal-500'>
-      Awesome username
-    </span>
-    <span className='hidden peer-hover:block peer-hover:text-amber-500'>
-      Hello
-    </span>
-    <input
-      type='password'
-      required
-      placeholder='Password'
-      className='placeholder-shown:text-cyan-600'
-    />
-    <input type='submit' value='Login' className='bg-white' />
-  </form>
+    <p className='first-letter:text-3xl first-letter:hover:text-purple-500'>
+      Hello Tailwind
+    </p>
+  </Box>
 );
 
 const Home: NextPage = () => {
@@ -187,6 +209,7 @@ const Home: NextPage = () => {
       <Profile />
       <Shopping />
       <Form />
+      <More />
     </Container>
   );
 };
