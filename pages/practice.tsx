@@ -1,9 +1,6 @@
 import type { NextPage } from 'next';
 import tw from 'tailwind-styled-components';
 
-// tailwind css 속성 값 커스텀 => [] 안에 커스텀 값 추가
-// (ex) text=[200px] bg-[url("")]
-
 const Container = tw.div`
   grid 
   gap-5 
