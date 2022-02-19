@@ -9,10 +9,10 @@ mail.setApiKey(process.env.SENDGRID_KEY!);
 
 async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseType>,
+  res: NextApiResponse<ResponseType>
 ) {
   const { phone, email } = req.body;
-  const user = phone ? { phone: +phone } : email ? { email } : null;
+  const user = phone ? { phone } : email ? { email } : null;
   if (!user) {
     return res.status(400).json({ ok: false });
   }
