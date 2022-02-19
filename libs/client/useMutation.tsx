@@ -9,7 +9,7 @@ interface UseMutationState<T> {
 type UseMutationResult<T> = [(data: any) => void, UseMutationState<T>];
 
 export default function useMutation<T = any>(
-  url: string,
+  url: string
 ): UseMutationResult<T> {
   const [state, setSate] = useState<UseMutationState<T>>({
     loading: false,
@@ -18,7 +18,7 @@ export default function useMutation<T = any>(
   });
 
   function mutation(data: any) {
-    setSate(prev => ({ ...prev, loading: true }));
+    setSate((prev) => ({ ...prev, loading: true }));
     fetch(url, {
       method: 'POST',
       headers: {
@@ -26,10 +26,11 @@ export default function useMutation<T = any>(
       },
       body: JSON.stringify(data),
     })
-      .then(res => res.json().catch(() => {}))
-      .then(data => setSate(prev => ({ ...prev, data })))
-      .catch(error => setSate(prev => ({ ...prev, error })))
-      .finally(() => setSate(prev => ({ ...prev, loading: false })));
+      .then((res) => res.json().catch(() => {}))
+      .then((data) => setSate((prev) => ({ ...prev, data, loading: false })))
+      .catch((error) =>
+        setSate((prev) => ({ ...prev, error, loading: false }))
+      );
   }
 
   return [mutation, { ...state }];
