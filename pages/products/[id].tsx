@@ -29,9 +29,13 @@ const ItemDetail: NextPage = () => {
     if (!data) {
       return;
     }
-    mutate({ ...data, isLiked: !data.isLiked }, false);
+    mutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
     toggleFav({});
   };
+
+  // const {mutate:unboundMutate} = useSWRConfig()
+  // mutate(key, (prev:any) => newData, shouldRefetchData)
+  // just only refetch => mutate(key)
 
   return (
     <Layout canGoBack>
