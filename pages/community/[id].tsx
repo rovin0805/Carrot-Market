@@ -7,6 +7,8 @@ import { Answer, Post, User } from '@prisma/client';
 import Link from 'next/link';
 import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
+import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
 interface AnswerWithUser extends Answer {
   user: User;
@@ -27,12 +29,26 @@ interface CommunityPostResponse {
   isWondering: boolean;
 }
 
+interface AnswerForm {
+  answer: string;
+}
+
+interface AnswerResponse {
+  ok: boolean;
+  response: Answer;
+}
+
 const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
   const { data, mutate } = useSWR<CommunityPostResponse>(
     router.query.id ? `/api/posts/${router.query.id}` : null
   );
-  const [wonder] = useMutation(`/api/posts/${router.query.id}/wonder`);
+  const [wonder, { loading }] = useMutation(
+    `/api/posts/${router.query.id}/wonder`
+  );
+  const [sendAnswer, { data: answerData, loading: answerLoading }] =
+    useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answers`);
+  const { register, handleSubmit, reset } = useForm<AnswerForm>();
 
   const onWonderClick = () => {
     if (!data?.post) {
@@ -54,8 +70,23 @@ const CommunityPostDetail: NextPage = () => {
       },
       false
     );
-    wonder({});
+    if (!loading) {
+      wonder({});
+    }
   };
+
+  const onValid = (form: AnswerForm) => {
+    if (answerLoading) {
+      return;
+    }
+    sendAnswer(form);
+  };
+
+  useEffect(() => {
+    if (answerData && answerData.ok) {
+      reset();
+    }
+  }, [answerData, reset]);
 
   return (
     <Layout canGoBack>
@@ -140,16 +171,17 @@ const CommunityPostDetail: NextPage = () => {
             </div>
           ))}
         </div>
-        <div className='px-4'>
+        <form className='px-4' onSubmit={handleSubmit(onValid)}>
           <TextArea
             name='description'
             placeholder='Answer this question!'
             required
+            register={register('answer', { required: true, minLength: 5 })}
           />
           <button className='mt-2 w-full rounded-md border border-transparent bg-orange-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 '>
-            Reply
+            {answerLoading ? 'Loading...' : 'Reply'}
           </button>
-        </div>
+        </form>
       </div>
     </Layout>
   );
