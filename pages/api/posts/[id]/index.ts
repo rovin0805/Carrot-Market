@@ -3,11 +3,13 @@ import withHandler, { ResponseType } from '@libs/server/withHandler';
 import client from '@libs/server/client';
 import { withApiSession } from '@libs/server/withSession';
 
-// TODO: need to check if this post exists before like, wonder, answer
+// TODO:
+// need to check if this post exists before like, wonder, answer
+// answers pagination
 
 async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseType>
+  res: NextApiResponse<ResponseType>,
 ) {
   const {
     query: { id },
@@ -55,7 +57,7 @@ async function handler(
       select: {
         id: true,
       },
-    })
+    }),
   );
   res.json({
     ok: true,
@@ -68,5 +70,5 @@ export default withApiSession(
   withHandler({
     methods: ['GET'],
     handler,
-  })
+  }),
 );
