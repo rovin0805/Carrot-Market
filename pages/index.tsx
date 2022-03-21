@@ -6,7 +6,7 @@ import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
 import { Product } from '@prisma/client';
 
-interface ProductWithCount extends Product {
+export interface ProductWithCount extends Product {
   _count: {
     favs: number;
   };
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
   return (
     <Layout title='홈' hasTabBar>
       <div className='flex flex-col space-y-5 divide-y'>
-        {data?.products?.map((product) => (
+        {data?.products?.map(product => (
           <Item
             id={product.id}
             key={product.id}
@@ -40,8 +40,7 @@ const Home: NextPage = () => {
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'
-            aria-hidden='true'
-          >
+            aria-hidden='true'>
             <path
               strokeLinecap='round'
               strokeLinejoin='round'
