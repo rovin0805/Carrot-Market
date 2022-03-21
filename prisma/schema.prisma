@@ -134,6 +134,7 @@ model Purchase {
   updatedAt DateTime @updatedAt
 }
 
+// TODO: fav, sale, purcahse => refactoring with record
 model Record {
   id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
