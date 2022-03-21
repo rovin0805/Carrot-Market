@@ -33,7 +33,7 @@ const Create: NextPage = () => {
 
   useEffect(() => {
     if (data && data.ok) {
-      router.push(`/stream/${data.stream.id}`);
+      router.replace(`/streams/${data.stream.id}`);
     }
   }, [data, router]);
 
@@ -48,7 +48,7 @@ const Create: NextPage = () => {
           type='text'
         />
         <Input
-          register={register('price', { required: true })}
+          register={register('price', { required: true, valueAsNumber: true })}
           required
           label='Price'
           name='price'
