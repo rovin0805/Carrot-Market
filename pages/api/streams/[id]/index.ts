@@ -5,7 +5,7 @@ import { withApiSession } from '@libs/server/withSession';
 
 async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseType>,
+  res: NextApiResponse<ResponseType>
 ) {
   const {
     query: { id },
@@ -13,6 +13,20 @@ async function handler(
   const stream = await client.stream.findUnique({
     where: {
       id: +id.toString(),
+    },
+    include: {
+      messages: {
+        select: {
+          id: true,
+          message: true,
+          user: {
+            select: {
+              id: true,
+              avatar: true,
+            },
+          },
+        },
+      },
     },
   });
   res.json({ ok: true, stream });
@@ -22,5 +36,5 @@ export default withApiSession(
   withHandler({
     methods: ['GET'],
     handler,
-  }),
+  })
 );
