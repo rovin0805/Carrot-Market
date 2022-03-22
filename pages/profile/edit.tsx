@@ -55,14 +55,28 @@ const EditProfile: NextPage = () => {
     }
   }, [data, setError]);
 
-  const onValid = ({ email, phone, name, avatar }: EditProfileForm) => {
+  const onValid = async ({ email, phone, name, avatar }: EditProfileForm) => {
     if (loading) return;
     if (email === '' && phone === '' && name === '') {
       return setError('formErrors', {
         message: 'Email OR Phone number are required. You need to choose one.',
       });
     }
-    editProfile({ email, phone, name });
+    if (avatar && avatar.length > 0) {
+      // ask for CF URL
+      const cloudflareUrl = await (await fetch(`/api/files`)).json();
+      console.log(cloudflareUrl);
+      return;
+      // upload file to CF URL
+      editProfile({
+        email,
+        phone,
+        name,
+        // avatarURL : CF.URL
+      });
+    } else {
+      editProfile({ email, phone, name });
+    }
   };
 
   return (
