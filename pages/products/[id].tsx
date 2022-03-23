@@ -21,7 +21,7 @@ interface ItemDetailResponse {
 const ItemDetail: NextPage = () => {
   const router = useRouter();
   const { data, mutate } = useSWR<ItemDetailResponse>(
-    router.query.id ? `/api/products/${router.query.id}` : null
+    router.query.id ? `/api/products/${router.query.id}` : null,
   );
   const [toggleFav] = useMutation(`/api/products/${router.query.id}/fav`);
 
@@ -29,7 +29,7 @@ const ItemDetail: NextPage = () => {
     if (!data) {
       return;
     }
-    mutate((prev) => prev && { ...prev, isLiked: !prev.isLiked }, false);
+    mutate(prev => prev && { ...prev, isLiked: !prev.isLiked }, false);
     toggleFav({});
   };
 
@@ -41,9 +41,15 @@ const ItemDetail: NextPage = () => {
     <Layout canGoBack>
       <div className='px-4  py-4'>
         <div className='mb-8'>
-          <div className='h-96 bg-slate-300' />
+          <img
+            src={`https://imagedelivery.net/g689J9meOiR7LpI7LttcTw/${data?.product.image}/public`}
+            className='h-96 bg-slate-300'
+          />
           <div className='flex cursor-pointer items-center space-x-3 border-t border-b py-3'>
-            <div className='h-12 w-12 rounded-full bg-slate-300' />
+            <img
+              src={`https://imagedelivery.net/g689J9meOiR7LpI7LttcTw/${data?.product?.user?.avatar}/avatar`}
+              className='h-12 w-12 rounded-full bg-slate-300'
+            />
             <div>
               <p className='text-sm font-medium text-gray-700'>
                 {data?.product?.user?.name}
@@ -71,21 +77,18 @@ const ItemDetail: NextPage = () => {
                   'flex items-center justify-center rounded-md p-3 hover:bg-gray-100',
                   data?.isLiked
                     ? 'text-rose-500 hover:text-rose-500'
-                    : 'text-gray-400 hover:text-gray-500'
-                )}
-              >
+                    : 'text-gray-400 hover:text-gray-500',
+                )}>
                 {data?.isLiked ? (
                   <svg
                     className='h-6 w-6'
                     fill='currentColor'
                     viewBox='0 0 20 20'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
+                    xmlns='http://www.w3.org/2000/svg'>
                     <path
                       fillRule='evenodd'
                       d='M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z'
-                      clipRule='evenodd'
-                    ></path>
+                      clipRule='evenodd'></path>
                   </svg>
                 ) : (
                   <svg
@@ -94,8 +97,7 @@ const ItemDetail: NextPage = () => {
                     fill='none'
                     viewBox='0 0 24 24'
                     stroke='currentColor'
-                    aria-hidden='true'
-                  >
+                    aria-hidden='true'>
                     <path
                       strokeLinecap='round'
                       strokeLinejoin='round'
@@ -111,7 +113,7 @@ const ItemDetail: NextPage = () => {
         <div>
           <h2 className='text-2xl font-bold text-gray-900'>Similar items</h2>
           <div className=' mt-6 grid grid-cols-2 gap-4'>
-            {data?.relatedProducts?.map((product) => (
+            {data?.relatedProducts?.map(product => (
               <Link key={product.id} href={`/products/${product.id}`}>
                 <a>
                   <div className='mb-4 h-56 w-full bg-slate-300' />
