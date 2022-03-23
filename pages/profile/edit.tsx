@@ -63,11 +63,14 @@ const EditProfile: NextPage = () => {
       });
     }
     if (avatar && avatar.length > 0) {
-      // ask for CF URL
-      const cloudflareUrl = await (await fetch(`/api/files`)).json();
-      console.log(cloudflareUrl);
+      const { id, uploadURL } = await (await fetch(`/api/files`)).json();
+      const form = new FormData();
+      form.append('file', avatar[0], user?.id + '');
+      await fetch(uploadURL, {
+        method: 'POST',
+        body: form,
+      });
       return;
-      // upload file to CF URL
       editProfile({
         email,
         phone,
@@ -93,8 +96,7 @@ const EditProfile: NextPage = () => {
           )}
           <label
             htmlFor='picture'
-            className='cursor-pointer rounded-md border border-gray-300 py-2 px-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'
-          >
+            className='cursor-pointer rounded-md border border-gray-300 py-2 px-3 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2'>
             Change
             <input
               {...register('avatar')}
