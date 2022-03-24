@@ -37,18 +37,18 @@ const Stream: NextPage = () => {
     router.query.id ? `/api/streams/${router.query.id}` : null,
     {
       refreshInterval: 1000,
-    }
+    },
   );
   const { register, handleSubmit, reset } = useForm<MessageForm>();
   const [sendMessage, { loading }] = useMutation(
-    `/api/streams/${router.query.id}/messages`
+    `/api/streams/${router.query.id}/messages`,
   );
 
   const onValid = (form: MessageForm) => {
     if (loading) return;
     reset();
     mutate(
-      (prev) =>
+      prev =>
         prev &&
         ({
           ...prev,
@@ -66,7 +66,7 @@ const Stream: NextPage = () => {
             ],
           },
         } as any),
-      false
+      false,
     );
     sendMessage(form);
   };
@@ -83,11 +83,22 @@ const Stream: NextPage = () => {
             ${data?.stream?.price}
           </span>
           <p className=' my-6 text-gray-700'>{data?.stream?.description}</p>
+          <div className='flex flex-col space-y-3 overflow-scroll rounded-md bg-orange-400 p-5'>
+            <span>Stream Keys (secret)</span>
+            <span className='text-white'>
+              <span className='font-medium text-gray-800'>URL:</span>{' '}
+              {data?.stream.cloudflareUrl}
+            </span>
+            <span className='text-white'>
+              <span className='font-medium text-gray-800'>Key:</span>{' '}
+              {data?.stream.cloudflareKey}
+            </span>
+          </div>
         </div>
         <div>
           <h2 className='text-2xl font-bold text-gray-900'>Live Chat</h2>
           <div className='h-[50vh] space-y-4 overflow-y-scroll py-10  px-4 pb-16'>
-            {data?.stream?.messages?.map((message) => (
+            {data?.stream?.messages?.map(message => (
               <Message
                 key={message.id}
                 message={message.message}
@@ -98,8 +109,7 @@ const Stream: NextPage = () => {
           <div className='fixed inset-x-0 bottom-0  bg-white py-2'>
             <form
               onSubmit={handleSubmit(onValid)}
-              className='relative mx-auto flex w-full  max-w-md items-center'
-            >
+              className='relative mx-auto flex w-full  max-w-md items-center'>
               <input
                 {...register('message', { required: true })}
                 type='text'

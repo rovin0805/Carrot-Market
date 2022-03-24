@@ -33,7 +33,7 @@ const Write: NextPage = () => {
 
   useEffect(() => {
     if (data?.ok) {
-      router.push(`/community/${data.post.id}`);
+      router.replace(`/community/${data.post.id}`);
     }
   }, [data, router]);
 
