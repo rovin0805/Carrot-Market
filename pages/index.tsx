@@ -5,6 +5,7 @@ import Layout from '@components/layout';
 import useUser from '@libs/client/useUser';
 import useSWR from 'swr';
 import { Product } from '@prisma/client';
+import client from '@libs/server/client';
 
 export interface ProductWithCount extends Product {
   _count: {
@@ -17,20 +18,20 @@ interface ProductsResponse {
   products: ProductWithCount[];
 }
 
-const Home: NextPage = () => {
+const Home: NextPage<{ products: ProductWithCount[] }> = ({ products }) => {
   const { user, isLoading } = useUser();
-  const { data } = useSWR<ProductsResponse>('/api/products');
+  // const { data } = useSWR<ProductsResponse>('/api/products');
 
   return (
     <Layout title='홈' hasTabBar>
       <div className='flex flex-col space-y-5 divide-y'>
-        {data?.products?.map(product => (
+        {products?.map((product) => (
           <Item
             id={product.id}
             key={product.id}
             title={product.name}
             price={product.price}
-            hearts={product._count.favs}
+            hearts={product._count?.favs}
           />
         ))}
         <FloatingButton href='/products/upload'>
@@ -40,7 +41,8 @@ const Home: NextPage = () => {
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'
-            aria-hidden='true'>
+            aria-hidden='true'
+          >
             <path
               strokeLinecap='round'
               strokeLinejoin='round'
@@ -53,5 +55,15 @@ const Home: NextPage = () => {
     </Layout>
   );
 };
+
+// 로딩 상태없이 서버단에서 데이터를 다 받아온 후에 유저에게 한번에 보여줌.
+export async function getServerSideProps() {
+  const products = await client.product.findMany({});
+  return {
+    props: {
+      products: JSON.parse(JSON.stringify(products)),
+    },
+  };
+}
 
 export default Home;
