@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '@components/button';
 import Input from '@components/input';
@@ -8,7 +8,20 @@ import useMutation from '@libs/client/useMutation';
 import { cls } from '@libs/client/utils';
 
 // import dynamic from 'next/dynamic';
-// const DynamicImportedComponent = dynamic(() => import("@components/test"), {ssr: false});
+// const DynamicImportedComponent = dynamic(() => import('@components/button'), {
+//   ssr: false,
+// });
+// const LazyLoadedComponent = dynamic(
+//   () =>
+//     new Promise((resolve) =>
+//       setTimeout(() => resolve(import('@components/button'), 10000))
+//     ),
+//   {
+//     ssr: false,
+//     loading: () => <span>Loading a big component!</span>, // or
+//     suspense: true,
+//   }
+// );
 
 interface EnterForm {
   email?: string;
@@ -67,6 +80,9 @@ const Enter: NextPage = () => {
             onSubmit={tokenHandleSubmit(onTokenValid)}
             className='mt-8 flex flex-col space-y-4'
           >
+            {/* <Suspense fallback={<span>Loading...<span>}>
+              ...LazyLoadedComponent...
+            </Suspense> */}
             <Input
               register={tokenRegister('token', {
                 required: true,
