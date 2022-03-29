@@ -26,6 +26,9 @@ async function handler(
         },
       },
     });
+
+    await res.unstable_revalidate('/community'); // ODR
+
     res.json({
       ok: true,
       post,
