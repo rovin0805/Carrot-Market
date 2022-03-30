@@ -10,6 +10,8 @@ import { cls } from '@libs/client/utils';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 
+// Code Challenge : getStaticProps & getStaticPaths & fallback 적용
+
 interface AnswerWithUser extends Answer {
   user: User;
 }
@@ -41,10 +43,10 @@ interface AnswerResponse {
 const CommunityPostDetail: NextPage = () => {
   const router = useRouter();
   const { data, mutate } = useSWR<CommunityPostResponse>(
-    router.query.id ? `/api/posts/${router.query.id}` : null,
+    router.query.id ? `/api/posts/${router.query.id}` : null
   );
   const [wonder, { loading }] = useMutation(
-    `/api/posts/${router.query.id}/wonder`,
+    `/api/posts/${router.query.id}/wonder`
   );
   const [sendAnswer, { data: answerData, loading: answerLoading }] =
     useMutation<AnswerResponse>(`/api/posts/${router.query.id}/answers`);
@@ -68,7 +70,7 @@ const CommunityPostDetail: NextPage = () => {
         },
         isWondering: !data.isWondering,
       },
-      false,
+      false
     );
     if (!loading) {
       wonder({});
@@ -118,19 +120,22 @@ const CommunityPostDetail: NextPage = () => {
               onClick={onWonderClick}
               className={cls(
                 'flex items-center space-x-2 text-sm',
-                data?.isWondering ? 'text-teal-600' : '',
-              )}>
+                data?.isWondering ? 'text-teal-600' : ''
+              )}
+            >
               <svg
                 className='h-4 w-4'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
-                xmlns='http://www.w3.org/2000/svg'>
+                xmlns='http://www.w3.org/2000/svg'
+              >
                 <path
                   strokeLinecap='round'
                   strokeLinejoin='round'
                   strokeWidth='2'
-                  d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                  d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+                ></path>
               </svg>
               <span>궁금해요 {data?.post?._count?.wondering}</span>
             </button>
@@ -140,19 +145,21 @@ const CommunityPostDetail: NextPage = () => {
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
-                xmlns='http://www.w3.org/2000/svg'>
+                xmlns='http://www.w3.org/2000/svg'
+              >
                 <path
                   strokeLinecap='round'
                   strokeLinejoin='round'
                   strokeWidth='2'
-                  d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'></path>
+                  d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'
+                ></path>
               </svg>
               <span>답변 {data?.post?._count?.answers}</span>
             </span>
           </div>
         </div>
         <div className='my-5 space-y-5 px-4'>
-          {data?.post?.answers?.map(answer => (
+          {data?.post?.answers?.map((answer) => (
             <div key={answer.id} className='flex items-start space-x-3'>
               <div className='h-8 w-8 rounded-full bg-slate-200' />
               <div>
